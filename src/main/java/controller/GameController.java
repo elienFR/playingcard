@@ -3,19 +3,11 @@ package controller;
 import model.Deck;
 import model.Player;
 import model.PlayingCard;
+import view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class View {
-  public void something() {
-
-  }
-
-  public void setController(GameController gc) {
-
-  }
-}
 
 public class GameController {
   Deck deck;
@@ -35,15 +27,15 @@ public class GameController {
 
   public void run() {
     while (gameState == GameState.AddingPlayer) {
-      view.something();
+      view.promptForPlayerName();
     }
 
     switch (gameState) {
       case CardsDealt:
-        view.something();
+        view.promptForFlip();
         break;
       case WinnerRevealed:
-        view.something();
+        view.promptForNewGame();
         break;
     }
   }
@@ -51,27 +43,30 @@ public class GameController {
   public void addPlayer(String playerName) {
     if (gameState == GameState.AddingPlayer) {
       players.add(new Player(playerName));
-      view.something();
+      view.showPlayerName(players.size(), playerName);
     }
   }
 
   public void startGame() {
     if (gameState != GameState.CardsDealt) {
       deck.shuffle();
+      int playerIndex = 1;
       for (Player player : players) {
         player.addCardToHand(deck.removeTopCard());
-        view.something();
+        view.showFaceDownCardForEachPlayer(playerIndex++, player.getName());
       }
       gameState = GameState.CardsDealt;
     }
     this.run();
   }
 
-  public void fliCards() {
+  public void flipCards() {
+    int playerIndex = 1;
     for (Player player : players) {
       PlayingCard pc = player.getCard(0);
       pc.flip();
-      view.something();
+      view.showCardForPlayer(playerIndex++,player.getName(),
+          pc.getRank().toString(), pc.getSuit().toString());
     }
 
     evaluateWinner();
@@ -86,19 +81,19 @@ public class GameController {
     int bestRank = -1;
     int bestSuit = -1;
 
-    for (Player player : players){
+    for (Player player : players) {
       boolean newBestPlayer = false;
 
-      if(bestPlayer == null) {
+      if (bestPlayer == null) {
         newBestPlayer = true;
       } else {
         PlayingCard pc = player.getCard(0);
         int thisRank = pc.getRank().value();
-        if(thisRank >= bestRank){
-          if(thisRank > bestRank){
+        if (thisRank >= bestRank) {
+          if (thisRank > bestRank) {
             newBestPlayer = true;
           } else {
-            if (pc.getSuit().value() > bestSuit){
+            if (pc.getSuit().value() > bestSuit) {
               newBestPlayer = true;
             }
           }
@@ -114,7 +109,7 @@ public class GameController {
   }
 
   public void displayWinner() {
-    view.something();
+    view.showWinner(winner.getName());
   }
 
   public void rebuildDeck() {

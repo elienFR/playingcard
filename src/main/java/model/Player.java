@@ -1,6 +1,7 @@
 package model;
 
 public class Player {
+
   private String name;
   private Hand hand;
 
@@ -16,6 +17,10 @@ public class Player {
 
   public PlayingCard getCard(int index){
     return hand.getCard(index);
+  }
+
+  public String getName() {
+    return name;
   }
 
   public PlayingCard removeCard(){
