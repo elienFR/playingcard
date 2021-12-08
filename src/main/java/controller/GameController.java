@@ -1,6 +1,7 @@
 package controller;
 
 import games.GameEvaluator;
+import games.HighCardGameEvaluator;
 import model.Deck;
 import model.Player;
 import model.PlayingCard;
@@ -18,13 +19,13 @@ public class GameController {
   GameState gameState;
   GameEvaluator gameEvaluator;
 
-  public GameController(Deck deck, View view) {
+  public GameController(Deck deck, View view, GameEvaluator gameEvaluator) {
     super();
     this.deck = deck;
     this.view = view;
     this.players = new ArrayList<Player>();
     this.gameState = GameState.AddingPlayer;
-    this.gameEvaluator = new GameEvaluator();
+    this.gameEvaluator = gameEvaluator;
     view.setController(this);
   }
 
@@ -72,11 +73,15 @@ public class GameController {
           pc.getRank().toString(), pc.getSuit().toString());
     }
 
-    winner = gameEvaluator.evaluateWinner(players);
+    evaluateWinner();
     displayWinner();
     rebuildDeck();
     gameState = GameState.WinnerRevealed;
     this.run();
+  }
+
+  public void evaluateWinner(){
+    winner = gameEvaluator.evaluateWinner(players);
   }
 
   public void displayWinner() {
