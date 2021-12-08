@@ -1,5 +1,6 @@
 package controller;
 
+import games.GameEvaluator;
 import model.Deck;
 import model.Player;
 import model.PlayingCard;
@@ -15,6 +16,7 @@ public class GameController {
   Player winner;
   View view;
   GameState gameState;
+  GameEvaluator gameEvaluator;
 
   public GameController(Deck deck, View view) {
     super();
@@ -22,6 +24,7 @@ public class GameController {
     this.view = view;
     this.players = new ArrayList<Player>();
     this.gameState = GameState.AddingPlayer;
+    this.gameEvaluator = new GameEvaluator();
     view.setController(this);
   }
 
@@ -69,44 +72,11 @@ public class GameController {
           pc.getRank().toString(), pc.getSuit().toString());
     }
 
-    evaluateWinner();
+    winner = gameEvaluator.evaluateWinner(players);
     displayWinner();
     rebuildDeck();
     gameState = GameState.WinnerRevealed;
     this.run();
-  }
-
-  public void evaluateWinner() {
-    Player bestPlayer = null;
-    int bestRank = -1;
-    int bestSuit = -1;
-
-    for (Player player : players) {
-      boolean newBestPlayer = false;
-
-      if (bestPlayer == null) {
-        newBestPlayer = true;
-      } else {
-        PlayingCard pc = player.getCard(0);
-        int thisRank = pc.getRank().value();
-        if (thisRank >= bestRank) {
-          if (thisRank > bestRank) {
-            newBestPlayer = true;
-          } else {
-            if (pc.getSuit().value() > bestSuit) {
-              newBestPlayer = true;
-            }
-          }
-        }
-      }
-      if (newBestPlayer) {
-        bestPlayer = player;
-        PlayingCard pc = player.getCard(0);
-        bestRank = pc.getRank().value();
-        bestSuit = pc.getSuit().value();
-      }
-    }
-    winner = bestPlayer;
   }
 
   public void displayWinner() {
