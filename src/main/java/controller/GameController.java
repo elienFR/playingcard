@@ -5,6 +5,7 @@ import games.HighCardGameEvaluator;
 import model.Deck;
 import model.Player;
 import model.PlayingCard;
+import view.GameViewable;
 import view.View;
 
 import java.util.ArrayList;
@@ -18,11 +19,12 @@ public class GameController {
   View view;
   GameState gameState;
   GameEvaluator gameEvaluator;
+  GameViewable gameViewable;
 
-  public GameController(Deck deck, View view, GameEvaluator gameEvaluator) {
+  public GameController(Deck deck, GameViewable gameViewable, GameEvaluator gameEvaluator) {
     super();
     this.deck = deck;
-    this.view = view;
+    this.gameViewable = gameViewable;
     this.players = new ArrayList<Player>();
     this.gameState = GameState.AddingPlayer;
     this.gameEvaluator = gameEvaluator;

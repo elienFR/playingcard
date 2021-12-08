@@ -1,6 +1,7 @@
 package model;
 
 public enum Suit {
+  NONE(0),
   DIAMONDS(1),
   HEART(2),
   SPADES(3),

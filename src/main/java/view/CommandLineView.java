@@ -4,8 +4,7 @@ import controller.GameController;
 
 import java.util.Scanner;
 
-public class View implements GameViewable{
-
+public class CommandLineView implements GameViewable {
   GameController controller;
   Scanner scanner = new Scanner(System.in);
 
