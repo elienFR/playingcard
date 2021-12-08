@@ -1,12 +1,10 @@
 package controller;
 
 import games.GameEvaluator;
-import games.HighCardGameEvaluator;
 import model.Deck;
 import model.Player;
 import model.PlayingCard;
 import view.GameViewable;
-import view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +14,14 @@ public class GameController {
   Deck deck;
   List<Player> players;
   Player winner;
-  View view;
   GameState gameState;
   GameEvaluator gameEvaluator;
-  GameViewable gameViewable;
+  GameViewable view;
 
   public GameController(Deck deck, GameViewable gameViewable, GameEvaluator gameEvaluator) {
     super();
     this.deck = deck;
-    this.gameViewable = gameViewable;
+    this.view = gameViewable;
     this.players = new ArrayList<Player>();
     this.gameState = GameState.AddingPlayer;
     this.gameEvaluator = gameEvaluator;
@@ -93,6 +90,18 @@ public class GameController {
   public void rebuildDeck() {
     for (Player player : players) {
       deck.returnCardToDeck(player.removeCard());
+    }
+  }
+
+  public void exitGame() {
+    System.exit(0);
+  }
+
+  public void nextAction(String nextChoice) {
+    if("+q".equals(nextChoice)){
+      exitGame();
+    } else {
+      startGame();
     }
   }
 

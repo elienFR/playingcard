@@ -3,7 +3,6 @@ package games;
 import controller.GameController;
 import model.Deck;
 import view.CommandLineView;
-import view.View;
 
 public class Games {
   public static void main(String[] args) {
