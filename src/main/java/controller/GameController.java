@@ -2,7 +2,7 @@ package controller;
 
 import games.GameEvaluator;
 import model.Deck;
-import model.Player;
+import model.IPlayer;
 import model.PlayingCard;
 import view.GameViewable;
 
@@ -12,8 +12,8 @@ import java.util.List;
 
 public class GameController {
   Deck deck;
-  List<Player> players;
-  Player winner;
+  List<IPlayer> players;
+  IPlayer winner;
   GameState gameState;
   GameEvaluator gameEvaluator;
   GameViewable view;
@@ -22,7 +22,7 @@ public class GameController {
     super();
     this.deck = deck;
     this.view = gameViewable;
-    this.players = new ArrayList<Player>();
+    this.players = new ArrayList<IPlayer>();
     this.gameState = GameState.AddingPlayer;
     this.gameEvaluator = gameEvaluator;
     view.setController(this);
@@ -45,7 +45,7 @@ public class GameController {
 
   public void addPlayer(String playerName) {
     if (gameState == GameState.AddingPlayer) {
-      players.add(new Player(playerName));
+      players.add(new IPlayer(playerName));
       view.showPlayerName(players.size(), playerName);
     }
   }
@@ -54,7 +54,7 @@ public class GameController {
     if (gameState != GameState.CardsDealt) {
       deck.shuffle();
       int playerIndex = 1;
-      for (Player player : players) {
+      for (IPlayer player : players) {
         player.addCardToHand(deck.removeTopCard());
         view.showFaceDownCardForEachPlayer(playerIndex++, player.getName());
       }
@@ -65,7 +65,7 @@ public class GameController {
 
   public void flipCards() {
     int playerIndex = 1;
-    for (Player player : players) {
+    for (IPlayer player : players) {
       PlayingCard pc = player.getCard(0);
       pc.flip();
       view.showCardForPlayer(playerIndex++,player.getName(),
@@ -88,7 +88,7 @@ public class GameController {
   }
 
   public void rebuildDeck() {
-    for (Player player : players) {
+    for (IPlayer player : players) {
       deck.returnCardToDeck(player.removeCard());
     }
   }

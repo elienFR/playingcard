@@ -13,7 +13,7 @@ public class CommandLineView implements GameViewable {
   }
 
   public void promptForPlayerName() {
-    System.out.println("Enter Player Name :");
+    System.out.println("Enter IPlayer Name :");
     String name = scanner.nextLine();
     if (name.isEmpty()) {
       controller.startGame();
