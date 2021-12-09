@@ -54,9 +54,9 @@ public class GameViewables implements GameViewable {
   }
 
   @Override
-  public void showFaceDownCardForEachPlayer(int playerIndex, String playerName) {
+  public void showFaceDownCardForPlayer(int playerIndex, String playerName) {
     for (GameViewable view : views) {
-      view.showFaceDownCardForEachPlayer(playerIndex, playerName);
+      view.showFaceDownCardForPlayer(playerIndex, playerName);
     }
   }
 

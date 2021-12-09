@@ -8,12 +8,10 @@ import java.awt.Container;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-
-public class GameSwingView implements GameViewable {
+public class GameSwingPassiveView implements GameViewable {
 
   GameController controller;
   JTextArea textArea;
@@ -59,9 +57,7 @@ public class GameSwingView implements GameViewable {
 
   @Override
   public void setController(GameController controller) {
-
     this.controller = controller;
-
   }
 
   @Override
@@ -86,31 +82,17 @@ public class GameSwingView implements GameViewable {
 
   @Override
   public void promptForPlayerName() {
-
-    String result = (String) JOptionPane.showInputDialog(frame, "Add a player", "IPlayer",
-        JOptionPane.PLAIN_MESSAGE, null, null, "");
-
-    if(result == null || result.isEmpty()) {
-      controller.nextAction("+q");
-    }
-
-    controller.addPlayer(result);
-
-    int addMore = JOptionPane.showConfirmDialog(frame, "Add more players ?", "More players", JOptionPane.YES_NO_OPTION);
-
-    if( addMore == JOptionPane.NO_OPTION) {
-      controller.startGame();
-    }
+    appendText("Waiting for player name ...");
   }
 
   @Override
   public void promptForFlip() {
-    controller.flipCards();
+    appendText("Waiting for flipping cards ...");
   }
 
   @Override
   public void promptForNewGame() {
-    int newGame = JOptionPane.showConfirmDialog(frame, "Play again ?", "Play again", JOptionPane.YES_NO_OPTION);
-    controller.nextAction(newGame == JOptionPane.NO_OPTION ? "+q" : "");
+    appendText("Waiting for next step ...");
   }
+
 }

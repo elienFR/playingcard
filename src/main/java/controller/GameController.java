@@ -54,7 +54,7 @@ public class GameController {
       int playerIndex = 1;
       for (IPlayer player : players) {
         player.addCardToHand(deck.removeTopCard());
-        view.showFaceDownCardForEachPlayer(playerIndex++, player.getName());
+        view.showFaceDownCardForPlayer(playerIndex++, player.getName());
       }
       gameState = GameState.CardsDealt;
     }

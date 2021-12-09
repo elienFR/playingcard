@@ -37,7 +37,7 @@ public class CommandLineView implements GameViewable {
     System.out.println("[" + playerIndex + "][" + playerName + "]");
   }
 
-  public void showFaceDownCardForEachPlayer(int playerIndex, String playerName) {
+  public void showFaceDownCardForPlayer(int playerIndex, String playerName) {
     System.out.println("[" + playerIndex + "][" + playerName + "[x][x]");
   }
 
