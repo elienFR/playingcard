@@ -2,22 +2,31 @@ package view;
 
 import controller.GameController;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Container;
+
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 
 public class GameSwingView implements GameViewable {
-  GameController gameController;
+
+  GameController controller;
   JTextArea textArea;
   JFrame frame;
 
   public void createAndShowGUI() {
-    //Create main frame
+
+    // create main frame
     frame = new JFrame("MVC-SOLID-Game");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(500, 500);
 
-    //display vertically
+    // display vertically
     Container contentPane = frame.getContentPane();
     contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
@@ -26,8 +35,8 @@ public class GameSwingView implements GameViewable {
     frame.setVisible(true);
   }
 
-  //a simple place to display what the controller is telling us
-  //very similar to our command line version
+  // a simple place to display what the controller is telling us
+  // very similar to our command line version
   private void addControllerCommandTracker(Container contentPane) {
     textArea = new JTextArea("Game Status\n", 100, 1);
     JScrollPane scrollPane = new JScrollPane(textArea);
@@ -35,20 +44,23 @@ public class GameSwingView implements GameViewable {
     textArea.setSize(500, 500);
   }
 
+  // all controls are added so they are centered horizontally in the area
   private void addCenteredComponent(JComponent component, Container contentPane) {
     component.setAlignmentX(Component.CENTER_ALIGNMENT);
     contentPane.add(component);
   }
+
 
   private void appendText(String text) {
     textArea.append(text + "\n");
     textArea.setCaretPosition(textArea.getDocument().getLength());
   }
 
+
   @Override
   public void setController(GameController controller) {
 
-    this.gameController = controller;
+    this.controller = controller;
 
   }
 
@@ -69,7 +81,7 @@ public class GameSwingView implements GameViewable {
 
   @Override
   public void showFaceDownCardForEachPlayer(int playerIndex, String name) {
-    appendText("["+playerIndex+"][" + name + "][x][x]");
+    appendText("[" + name + "][][]");
   }
 
   @Override
@@ -79,26 +91,26 @@ public class GameSwingView implements GameViewable {
         JOptionPane.PLAIN_MESSAGE, null, null, "");
 
     if(result == null || result.isEmpty()) {
-      gameController.nextAction("+q");
+      controller.nextAction("+q");
     }
 
-    gameController.addPlayer(result);
+    controller.addPlayer(result);
 
     int addMore = JOptionPane.showConfirmDialog(frame, "Add more players ?", "More players", JOptionPane.YES_NO_OPTION);
 
     if( addMore == JOptionPane.NO_OPTION) {
-      gameController.startGame();
+      controller.startGame();
     }
   }
 
   @Override
   public void promptForFlip() {
-    gameController.flipCards();
+    controller.flipCards();
   }
 
   @Override
   public void promptForNewGame() {
     int newGame = JOptionPane.showConfirmDialog(frame, "Play again ?", "Play again", JOptionPane.YES_NO_OPTION);
-    gameController.nextAction(newGame == JOptionPane.NO_OPTION ? "+q" : "");
+    controller.nextAction(newGame == JOptionPane.NO_OPTION ? "+q" : "");
   }
 }
