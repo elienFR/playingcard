@@ -1,6 +1,7 @@
 package model;
 
 public interface IPlayer {
+
   public void addCardToHand(PlayingCard pc);
 
   public PlayingCard getCard(int index);
