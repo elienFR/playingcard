@@ -1,7 +1,7 @@
 package model;
 
 public class DeckFactory {
-  public Deck makeDeck(DeckType type) {
+  public static Deck makeDeck(DeckType type) {
     switch (type) {
       case Normal:
         return new NormalDeck();
