@@ -1,9 +1,7 @@
 package controller;
 
 import games.GameEvaluator;
-import model.Deck;
-import model.IPlayer;
-import model.PlayingCard;
+import model.*;
 import view.GameViewable;
 
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ public class GameController {
 
   public void addPlayer(String playerName) {
     if (gameState == GameState.AddingPlayer) {
-      players.add(new IPlayer(playerName));
+      players.add(new Player(playerName));
       view.showPlayerName(players.size(), playerName);
     }
   }
@@ -80,7 +78,7 @@ public class GameController {
   }
 
   public void evaluateWinner(){
-    winner = gameEvaluator.evaluateWinner(players);
+    winner = new WinningPlayer(gameEvaluator.evaluateWinner(players));
   }
 
   public void displayWinner() {
